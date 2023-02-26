@@ -112,6 +112,9 @@ const getTimeLinePost = async (req, res) => {
         }
       },
       {
+        $unwind: '$following'
+      },
+      {
         $lookup: {
           from: "posts",
           localField: "following",
