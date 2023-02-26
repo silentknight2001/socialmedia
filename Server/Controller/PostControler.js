@@ -106,7 +106,6 @@ const getTimeLinePost = async (req, res) => {
     const currentUserPost = await PostModel.find({ userId: userId });
     console.log( currentUserPost )
     const followingPost = await UserModel.aggregate([
-    
       {
         $match: {
           _id: new mongoose.Types.ObjectId(userId),
@@ -121,6 +120,9 @@ const getTimeLinePost = async (req, res) => {
         }
       },
       {
+        $unwind: '$followingPosts'
+      },
+      {
         $group: {
           _id: "$followingPosts._id",
           userId: { $first: "$followingPosts.userId" },
@@ -128,20 +130,37 @@ const getTimeLinePost = async (req, res) => {
           createdAt: { $first: "$followingPosts.createdAt" }
         }
       },
+      // Did not understood use of followingPost below
+      // {
+      //   $project: {
+      //     followingPost: 1,
+      //     _id: 0
+      //   }
+      // },
       {
         $project: {
-          followingPost: 1,
-          _id: 0
+          _id: 0,
+          userId: 1,
+          content: 1,
+          createdAt: 1
         }
       },
     ]);
 
+    /**
+     * Always add a check that if you are getting the expected data or not
+     * In below case we are expecting an array which contain followingPost
+     * But, before getting it we should properly check whether the array have any data or not
+     * below code could also be written as ->
+     * const followingPosts = followingPost && followingPost.length > 0 ? followingPost[0].followingPost : []
+     */
 
-    const followingPosts = await followingPost[0]?.followingPost ?? [];
+    const followingPosts = followingPost[0]?.followingPost || [];
 
-    console.log(`chatGpt suggetion:---........  ${followingPosts}`);
+    // console.log(`chatGpt suggetion:---........  ${followingPosts}`);
+    console.log(`debugging  ${JSON.stringify(followingPost)}`);
     
-    res.status(200).json(currentUserPost.concat([...followingPost[0].followingPost])
+    res.status(200).json(currentUserPost.concat(followingPost)
 .sort((a,b)=>{
         return b.createdAt - a.createdAt 
       }));
