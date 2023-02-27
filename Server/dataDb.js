@@ -1,5 +1,5 @@
-db.users.find()[
-  ({
+db.users.insertMany([
+  {
     _id: ObjectId("63ceca4e16d5d7fb4f3f3455"),
     username: "@pooja",
     password: "pooja1234",
@@ -63,15 +63,15 @@ db.users.find()[
     createdAt: ISODate("2023-01-27T17:08:42.123Z"),
     updatedAt: ISODate("2023-02-12T14:50:50.709Z"),
     __v: 0,
-  })
-];
+  }
+])
 
  //.......................................... post data..........................
 
- db.posts.find()[
-  ({
+db.posts.insertMany([
+  {
     _id: ObjectId("63e43b65a4f9906017287267"),
-    userId: "63d00e0569aef8ed0e036944",
+    userId: ObjectId("63d00e0569aef8ed0e036944"),
     desc: "my first post",
     likes: [],
     createdAt: ISODate("2023-02-09T00:16:37.376Z"),
@@ -80,7 +80,7 @@ db.users.find()[
   },
   {
     _id: ObjectId("63e6de7bd676086e8f23abac"),
-    userId: "63d4051a252ef6c3d50d7f17",
+    userId: ObjectId("63d4051a252ef6c3d50d7f17"),
     desc: "hello i am bishal from india",
     likes: ["63d01d02c8ac924ebfa399bd"],
     createdAt: ISODate("2023-02-11T00:16:59.748Z"),
@@ -89,11 +89,11 @@ db.users.find()[
   },
   {
     _id: ObjectId("63e6deacd676086e8f23abae"),
-    userId: "63d01d02c8ac924ebfa399bd",
+    userId: ObjectId("63d01d02c8ac924ebfa399bd"),
     desc: "hello i am nayan from North-east india",
     likes: [],
     createdAt: ISODate("2023-02-11T00:17:48.473Z"),
     updatedAt: ISODate("2023-02-11T00:17:48.473Z"),
     __v: 0,
-  })
-];
+  }
+])

@@ -6,7 +6,7 @@ const bodyparser = require("body-parser")
 const mongoose = require("mongoose")
 const app = express();
 const Authroute = require("./Routes/Authroute")
-const UserRoute = require("./Routes/userRout")
+const UserRoute = require("./Routes/userRoute")
 const PostRout = require("./Routes/PostRoute")
 
 

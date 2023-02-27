@@ -148,7 +148,7 @@ const getTimeLinePost = async (req, res) => {
           createdAt: 1
         }
       },
-    ]);
+    ])
 
     /**
      * Always add a check that if you are getting the expected data or not
@@ -160,8 +160,8 @@ const getTimeLinePost = async (req, res) => {
 
     const followingPosts = followingPost[0]?.followingPost || [];
 
+    console.log('debugging',followingPost);
     // console.log(`chatGpt suggetion:---........  ${followingPosts}`);
-    console.log(`debugging  ${JSON.stringify(followingPost)}`);
     
     res.status(200).json(currentUserPost.concat(followingPost)
 .sort((a,b)=>{
@@ -175,5 +175,5 @@ const getTimeLinePost = async (req, res) => {
 
 
 module.exports = {createPost,
-getPost,updatePost,deletePost,likesDislikesPost,getTimeLinePost,};
+getPost,updatePost,deletePost,likesDislikesPost,getTimeLinePost};
 
