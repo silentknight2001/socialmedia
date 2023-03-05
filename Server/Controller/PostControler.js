@@ -34,12 +34,15 @@ const updatePost = async (req, res) => {
   const postId = req.params.id;
   const { userId } = req.body;
   try {
+    if (!mongoose.Types.ObjectId.isValid(postId)) { //for id getting or not
+     return res.status(404).send({ message: "Invalid post id" });
+    }
     const post = await PostModel.findById(postId);
     if (!post) {
       return res.status(404).send({ message: "Doesnot exits this user" });
     }
-    if (post.userId === userId) {
-      await post.updateOne({ $set: req.body });
+    if (post.userId.toString() === userId.toString()) {
+      await post.updateOne({ $set:req.body});
       res.status(200).send({ message: "post updated" });
     } else {
       res
@@ -51,17 +54,22 @@ const updatePost = async (req, res) => {
   }
 };
 
+
+
 //delete a post
 
 const deletePost = async (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
   try {
+    if (!mongoose.Types.ObjectId.isValid(id)) { //for id getting or not
+      return res.status(404).send({ message: "Invalid post id" });
+     }
     const post = await PostModel.findById(id);
     if (!post) {
       return res.status(404).send({ message: "Doesnot exits this user" });
     }
-    if (post.userId === userId) {
+    if (post.userId.toString() === userId.toString()) {
       await post.deleteOne();
       res.status(200).send({ message: "Deleted post successfully" });
     } else {
@@ -97,20 +105,20 @@ const likesDislikesPost = async (req, res) => {
 
 // get timeLine post
 
-
-
 const getTimeLinePost = async (req, res) => {
-  const userId = req.params.id;
+  const userId = req.params.id.toString();
   
   try {
     const currentUserPost = await PostModel.find({ userId: userId });
     console.log( currentUserPost )
     const followingPost = await UserModel.aggregate([
-    
       {
         $match: {
           _id: new mongoose.Types.ObjectId(userId),
         }
+      },
+      {
+        $unwind: '$following'
       },
       {
         $lookup: {
@@ -121,6 +129,9 @@ const getTimeLinePost = async (req, res) => {
         }
       },
       {
+        $unwind: '$followingPosts'
+      },
+      {
         $group: {
           _id: "$followingPosts._id",
           userId: { $first: "$followingPosts.userId" },
@@ -128,20 +139,22 @@ const getTimeLinePost = async (req, res) => {
           createdAt: { $first: "$followingPosts.createdAt" }
         }
       },
+    
       {
         $project: {
-          followingPost: 1,
-          _id: 0
+          _id: 0,
+          userId: 1,
+          content: 1,
+          createdAt: 1
         }
       },
-    ]);
-
-
-    const followingPosts = await followingPost[0]?.followingPost ?? [];
-
-    console.log(`chatGpt suggetion:---........  ${followingPosts}`);
+    ])
+   
+    const followingPosts = followingPost[0]?.followingPost || [];
+  
+    console.log(`debugging  ${JSON.stringify(followingPost)}`);
     
-    res.status(200).json(currentUserPost.concat([...followingPost[0].followingPost])
+    res.status(200).json(currentUserPost.concat(followingPost)
 .sort((a,b)=>{
         return b.createdAt - a.createdAt 
       }));
@@ -150,6 +163,7 @@ const getTimeLinePost = async (req, res) => {
     res.status(500).send(error);
   }
 };
+
 
 
 module.exports = {createPost,
