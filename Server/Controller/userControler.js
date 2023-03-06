@@ -26,22 +26,25 @@ const updateUser = async (req, res) => {
   const id = req.params.id;
   const { currentUserId, currentUserAdminStatus, password } = req.body;
 
-  if (id === currentUserId || currentUserAdminStatus){
+  if (id !== currentUserId && !currentUserAdminStatus){
     res.status(400).send({ message: 'Invalid ID' });
+  } else {
     try {
       if (password) {
         const salt = await bcrypt.genSalt(10);
         req.body.password = await bcrypt.hash(password, salt);
       }
-      const user = await UserModel.findByIdAndUpdate(id, req.body,{
+      const updatedUser = await UserModel.findByIdAndUpdate(mongoose.Types.ObjectId(id), req.body,{
         new: true,
+        runValidators: true
       });
-      res.status(200).send(user);
+      if (!updatedUser) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      return res.json(updatedUser);
     } catch (error) {
       res.status(500).send(error);
     }
-  } else {
-    res.status(403).send("Access Denied! you can only update your own profile");
   }
 };
 
@@ -52,7 +55,8 @@ const userDelete = async (req, res) => {
   const { currentUserId, currentUserAdminStatus } = req.body;
   if (currentUserId === id || currentUserAdminStatus) {
     try {
-      const user = await UserModel.findByIdAndDelete(id);
+      const user = await UserModel.findByIdAndDelete({_id: mongoose.Types.ObjectId(id)});
+      
       res.status(200).send("Successfully Deleted");
     } catch (error) {
       res.status(400).send(error);
@@ -65,7 +69,7 @@ const userDelete = async (req, res) => {
 //Follw a user 
 
 const followUser = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id.trim();
   const { currentUserId } = req.body;
 
   if (currentUserId === id) {
@@ -74,26 +78,22 @@ const followUser = async (req, res) => {
     try {
       // const followUser = await UserModel.updateOne(id); // its not working old model
       // const followingUser = await UserModel.updateOne(currentUserId);
-      const followUser = await UserModel.findById({_id: mongoose.Types.ObjectId(id)}); // new model.... 
-      const followingUser = await UserModel.findById({_id: mongoose.Types.ObjectId(currentUserId)});
+      const followUser = await UserModel.findById((id)); // new model.... 
+      const followingUser = await UserModel.findById(currentUserId);
 
 
       if (!followUser.followers.includes(currentUserId)) {
-        // await followUser.findByIdAndUpdate({ $push: { followers: id} });
-        // await followingUser.findByIdAndUpdate({ $push: { following: currentUserId} });
-
+      
         await followUser.updateOne({ $push: { followers:mongoose.Types.ObjectId(currentUserId)}});
         await followingUser.updateOne({ $push: { following:mongoose.Types.ObjectId(id)}});
         res.status(200).send({message:"User Followed"});
-      // } else if(followUser.followers.includes(currentUserId)) {
-      //   await followUser.updateOne({ $pull: { followers:mongoose.Types.ObjectId(currentUserId)} });
-      //   await followingUser.updateOne({ $pull: { following:mongoose.Types.ObjectId(id)}});
-      //   res.status(200).send({message:"User UnFollowed"});
+        res.status(200).send({message:"User UnFollowed"});
     
     }else{
         res.status(403).send({message:"User alredy followed by you!"});
       }
     } catch (error) {
+      console.log(error);
       res.status(500).send(error);
     }
   }
@@ -105,7 +105,7 @@ const followUser = async (req, res) => {
 //UnFollw a user 
 
 const UnfollowUser = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id.trim();
   const { currentUserId } = req.body;
 
   if (currentUserId === id) {
@@ -123,6 +123,7 @@ const UnfollowUser = async (req, res) => {
         res.status(403).send({message:"User not followed by you!"});
       }
     } catch (error) {
+  
       res.status(500).send(error);
     }
   }

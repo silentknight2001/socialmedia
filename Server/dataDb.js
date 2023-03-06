@@ -1,85 +1,87 @@
 db.users.find()
 [
   {
-    _id: ObjectId("6400d907e0997f2e29f58abd"),
-    username: 'Tejas@gmail.com',
-    password: '$2a$10$2R8k2etRIJAlimCwK5FwQuZhkgGQqGIu0fHVbQXnos5qOn5eck4Be',
+    _id: ObjectId("6405707fa43fe74ff43fffee"),
+    username: 'tejas@gmail.com',
+    password: '$2a$10$3lLktQrIxOildhUReVJZTuMxNUP7KgqU1BeSdkjsNREonbVDYqFR.',
     firstname: 'Tejas',
-    lastname: 'teja',
+    lastname: 'Kambel',
     isAdmin: false,
     followers: [
-      ObjectId("6400d96de0997f2e29f58ac1"),
-      ObjectId("6400d935e0997f2e29f58abf")
+      ObjectId("640570a3a43fe74ff43ffff0"),
+      ObjectId("640570bea43fe74ff43ffff2"),
+      ObjectId("640570e4a43fe74ff43ffff4")
     ],
     following: [
-      ObjectId("6400d935e0997f2e29f58abf"),
-      ObjectId("6400d96de0997f2e29f58ac1"),
-      ObjectId("64022f1a092d4ce5a14485ae")
+      ObjectId("640570a3a43fe74ff43ffff0"),
+      ObjectId("640570bea43fe74ff43ffff2"),
+      ObjectId("640570e4a43fe74ff43ffff4")
     ],
-    createdAt: ISODate("2023-03-02T17:12:39.739Z"),
-    updatedAt: ISODate("2023-03-05T01:04:48.215Z"),
+    createdAt: ISODate("2023-03-06T04:47:59.270Z"),
+    updatedAt: ISODate("2023-03-06T05:20:08.162Z"),
     __v: 0
   },
   {
-    _id: ObjectId("6400d935e0997f2e29f58abf"),
+    _id: ObjectId("640570a3a43fe74ff43ffff0"),
     username: 'nayan@gmail.com',
-    password: '$2a$10$qLdlU6iMajLXifRG8HKUE.2F6eNdVrWwQmXIuWAerm1ukMFhMxd7.',
+    password: '$2a$10$45XZAU42QNnzs3DOb04n3edeL9BAIwX8jkH4Zv4DBvDHvdrFQ9tta',
     firstname: 'Nayan',
     lastname: 'Biswas',
     isAdmin: false,
     followers: [
-      ObjectId("64022f1a092d4ce5a14485ae"),
-      ObjectId("6400d907e0997f2e29f58abd"),
-      ObjectId("6400d96de0997f2e29f58ac1")
+      ObjectId("6405707fa43fe74ff43fffee"),
+      ObjectId("640570bea43fe74ff43ffff2"),
+      ObjectId("640570e4a43fe74ff43ffff4")
     ],
     following: [
-      ObjectId("6400d907e0997f2e29f58abd"),
-      ObjectId("6400d96de0997f2e29f58ac1"),
-      ObjectId("64022f1a092d4ce5a14485ae")
+      ObjectId("6405707fa43fe74ff43fffee"),
+      ObjectId("640570bea43fe74ff43ffff2"),
+      ObjectId("640570e4a43fe74ff43ffff4")
     ],
-    createdAt: ISODate("2023-03-02T17:13:25.820Z"),
-    updatedAt: ISODate("2023-03-05T00:56:46.011Z"),
+    createdAt: ISODate("2023-03-06T04:48:35.879Z"),
+    updatedAt: ISODate("2023-03-06T05:11:50.607Z"),
     __v: 0
   },
   {
-    _id: ObjectId("6400d96de0997f2e29f58ac1"),
+    _id: ObjectId("640570bea43fe74ff43ffff2"),
     username: 'pooja@gmail.com',
-    password: '$2a$10$R6MAQAVJ4tSdX2ozrcalleALnQ0kES5fJeiYQtbM5pOhJFZHqMia.',
+    password: '$2a$10$9Ol1soLmCnJbqrznPQ.hlOP0lRTVlPWWtSzzT.I6ugQ7noyS5NZKm',
     firstname: 'Pooja',
-    lastname: 'Ladha',
+    lastname: 'ladha',
     isAdmin: false,
     followers: [
-      '64022f1a092d4ce5a14485ae',
-      ObjectId("6400d907e0997f2e29f58abd"),
-      ObjectId("6400d935e0997f2e29f58abf")
+      ObjectId("6405707fa43fe74ff43fffee"),
+      ObjectId("640570a3a43fe74ff43ffff0"),
+      ObjectId("640570e4a43fe74ff43ffff4")
     ],
     following: [
-      ObjectId("64022f1a092d4ce5a14485ae"),
-      ObjectId("6400d935e0997f2e29f58abf"),
-      ObjectId("6400d907e0997f2e29f58abd")
+      ObjectId("640570e4a43fe74ff43ffff4"),
+      ObjectId("640570a3a43fe74ff43ffff0"),
+      ObjectId("6405707fa43fe74ff43fffee")
     ],
-    createdAt: ISODate("2023-03-02T17:14:21.738Z"),
-    updatedAt: ISODate("2023-03-05T01:02:41.875Z"),
+    createdAt: ISODate("2023-03-06T04:49:02.788Z"),
+    updatedAt: ISODate("2023-03-06T05:11:37.282Z"),
     __v: 0
   },
   {
-    _id: ObjectId("64022f1a092d4ce5a14485ae"),
-    username: 'biki@gmail.com',
-    password: '$2a$10$QAJUxDrvsv2ee.SPDtONOuolE40RlcaKHCZ1567Ka.ZqAJGj3DIma',
-    firstname: 'biki',
-    lastname: 'dey',
+    _id: ObjectId("640570e4a43fe74ff43ffff4"),
+    username: 'bishal@gmail.com',
+    password: '$2a$10$KJbu43Z1fbpOvh.GTTWKW.5512nY.9zvGZfqdpOJ4.cRFALwGJ9wG',
+    firstname: 'Bishal',
+    lastname: 'Das',
     isAdmin: false,
     followers: [
-      ObjectId("6400d907e0997f2e29f58abd"),
-      ObjectId("6400d96de0997f2e29f58ac1"),
-      ObjectId("6400d935e0997f2e29f58abf")
+      ObjectId("6405707fa43fe74ff43fffee"),
+      ObjectId("640570a3a43fe74ff43ffff0"),
+      ObjectId("640570bea43fe74ff43ffff2")
     ],
     following: [
-      '6400d96de0997f2e29f58ac1',
-      ObjectId("6400d935e0997f2e29f58abf")
+      ObjectId("640570bea43fe74ff43ffff2"),
+      ObjectId("640570a3a43fe74ff43ffff0"),
+      ObjectId("6405707fa43fe74ff43fffee")
     ],
-    createdAt: ISODate("2023-03-03T17:32:10.326Z"),
-    updatedAt: ISODate("2023-03-05T01:04:48.215Z"),
+    createdAt: ISODate("2023-03-06T04:49:40.433Z"),
+    updatedAt: ISODate("2023-03-06T05:20:08.166Z"),
     __v: 0
   }
 ]
@@ -87,42 +89,41 @@ db.users.find()
  //.......................................... post data..........................
 
  db.posts.find()
- [
-   {
-     _id: ObjectId("6403eae7c2262fa5e511a29b"),
-     userId: ObjectId("64022f1a092d4ce5a14485ae"),
-     desc: "Hey I'm Biki from lumding assam",
-     likes: [],
-     createdAt: ISODate("2023-03-05T01:05:43.133Z"),
-     updatedAt: ISODate("2023-03-05T17:14:36.634Z"),
-     __v: 0
-   },
-   {
-     _id: ObjectId("6404acaf6f1d6596737774ed"),
-     userId: ObjectId("6400d96de0997f2e29f58ac1"),
-     desc: 'greeting i m pooja i am from lumding assam',
-     likes: [ '6400d96de0997f2e29f58ac1', '6400d935e0997f2e29f58abf' ],
-     createdAt: ISODate("2023-03-05T14:52:31.498Z"),
-     updatedAt: ISODate("2023-03-05T17:18:23.046Z"),
-     __v: 0
-   },
-   {
-     _id: ObjectId("6404acf96f1d6596737774ef"),
-     userId: ObjectId("6400d96de0997f2e29f58ac1"),
-     desc: "Hello this is  Tejas and I'm from Mumbai",
-     likes: [],
-     createdAt: ISODate("2023-03-05T14:53:45.247Z"),
-     updatedAt: ISODate("2023-03-05T14:53:45.247Z"),
-     __v: 0
-   },
-   {
-     _id: ObjectId("6404ad286f1d6596737774f1"),
-     userId: ObjectId("6400d935e0997f2e29f58abf"),
-     desc: "Hello this is  Nayan and I'm from Assam",
-     likes: [],
-     createdAt: ISODate("2023-03-05T14:54:32.758Z"),
-     updatedAt: ISODate("2023-03-05T14:54:32.758Z"),
-     __v: 0
-   }
- ]
- 
+[
+  {
+    _id: ObjectId("64058bf8493c6df5ce417b24"),
+    userId: ObjectId("6405707fa43fe74ff43fffee"),
+    desc: 'Hello this is Tejas from Mumbai',
+    likes: [],
+    createdAt: ISODate("2023-03-06T06:45:12.475Z"),
+    updatedAt: ISODate("2023-03-06T06:45:12.475Z"),
+    __v: 0
+  },
+  {
+    _id: ObjectId("64058c26493c6df5ce417b26"),
+    userId: ObjectId("640570a3a43fe74ff43ffff0"),
+    desc: 'Hello this is Nayan from Assam',
+    likes: [],
+    createdAt: ISODate("2023-03-06T06:45:58.555Z"),
+    updatedAt: ISODate("2023-03-06T06:45:58.555Z"),
+    __v: 0
+  },
+  {
+    _id: ObjectId("64058c4a493c6df5ce417b28"),
+    userId: ObjectId("640570bea43fe74ff43ffff2"),
+    desc: 'Hello this is Pooja from Rajasthan',
+    likes: [],
+    createdAt: ISODate("2023-03-06T06:46:34.924Z"),
+    updatedAt: ISODate("2023-03-06T06:46:34.924Z"),
+    __v: 0
+  },
+  {
+    _id: ObjectId("64058c83493c6df5ce417b2a"),
+    userId: ObjectId("640570e4a43fe74ff43ffff4"),
+    desc: 'Hello this is Bishal from Assam Lumding',
+    likes: [ '640570e4a43fe74ff43ffff4' ],
+    createdAt: ISODate("2023-03-06T06:47:31.232Z"),
+    updatedAt: ISODate("2023-03-06T06:50:52.048Z"),
+    __v: 0
+  }
+]

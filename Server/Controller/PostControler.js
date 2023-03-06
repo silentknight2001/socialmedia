@@ -17,7 +17,7 @@ const createPost = async (req, res) => {
 // Get a post
 
 const getPost = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id.trim();
   try {
     const post = await PostModel.findById(id);
     if (post) {
@@ -105,20 +105,75 @@ const likesDislikesPost = async (req, res) => {
 
 // get timeLine post
 
+// const getTimeLinePost = async (req, res) => {
+//   const userId = req.params.id.toString();
+  
+//   try {
+//     const currentUserPost = await PostModel.find({ userId: userId });
+//     console.log( currentUserPost )
+//     const followingPost = await UserModel.aggregate([
+//       {
+//         $match: {
+//           _id: new mongoose.Types.ObjectId(userId),
+//         }
+//       },
+//       {
+//         $unwind: '$following'
+//       },
+//       {
+//         $lookup: {
+//           from: "posts",
+//           localField: "following",
+//           foreignField: "userId",
+//           as: "followingPosts",
+//         }
+//       },
+//       {
+//         $unwind: '$followingPosts'
+//       },
+//       {
+//         $group: {
+//           _id: "$followingPosts._id",
+//           userId: { $first: "$followingPosts.userId" },
+//           desc: { $first: "$followingPosts.content" },
+//           createdAt: { $first: "$followingPosts.createdAt" }
+//         }
+//       },
+    
+//       {
+//         $project: {
+//           _id: 0,
+//           _id: 1,
+//           desc: 1,
+//           createdAt: 1
+//         }
+//       },
+//     ])
+   
+//     const followingPosts = followingPost[0]?.followingPost || [];
+  
+//     console.log(`debugging  ${JSON.stringify(followingPost)}`);
+    
+//     res.status(200).json(currentUserPost.concat(followingPost)
+// .sort((a,b)=>{
+//         return b.createdAt - a.createdAt 
+//       }));
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send(error);
+//   }
+// };
+
 const getTimeLinePost = async (req, res) => {
   const userId = req.params.id.toString();
   
   try {
     const currentUserPost = await PostModel.find({ userId: userId });
-    console.log( currentUserPost )
     const followingPost = await UserModel.aggregate([
       {
         $match: {
           _id: new mongoose.Types.ObjectId(userId),
         }
-      },
-      {
-        $unwind: '$following'
       },
       {
         $lookup: {
@@ -132,38 +187,30 @@ const getTimeLinePost = async (req, res) => {
         $unwind: '$followingPosts'
       },
       {
-        $group: {
-          _id: "$followingPosts._id",
-          userId: { $first: "$followingPosts.userId" },
-          content: { $first: "$followingPosts.content" },
-          createdAt: { $first: "$followingPosts.createdAt" }
-        }
-      },
-    
-      {
         $project: {
-          _id: 0,
-          userId: 1,
-          content: 1,
-          createdAt: 1
+          _id: '$followingPosts._id',
+          userId: '$followingPosts.userId',
+          desc: '$followingPosts.desc',
+          createdAt: '$followingPosts.createdAt',
         }
       },
-    ])
-   
-    const followingPosts = followingPost[0]?.followingPost || [];
-  
-    console.log(`debugging  ${JSON.stringify(followingPost)}`);
+    ]);
     
-    res.status(200).json(currentUserPost.concat(followingPost)
-.sort((a,b)=>{
-        return b.createdAt - a.createdAt 
-      }));
+    const timelinePosts = currentUserPost.concat(followingPost)
+      .sort((a,b) => b.createdAt - a.createdAt);
+    
+    res.status(200).json(timelinePosts);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
   }
 };
 
+/*
+In this solution, I removed the $unwind and $group stages from the followingPost aggregation pipeline since we are only interested in the fields from the Posts collection. Instead, I added a $project stage to transform the fields of the followingPosts documents to match the fields of the Post model.
+
+I also updated the timelinePosts array to include both the currentUserPost and followingPost arrays, sorted by the createdAt field in descending order.
+*/
 
 
 module.exports = {createPost,
